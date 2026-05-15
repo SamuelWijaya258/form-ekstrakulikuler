@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>website sekolah - sign in</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <h1>Sign In</h1>
+        <p>Welcome Back to CHIS Cyber School</p>
+
+        <form id="loginForm">
+            <!-- Email -->
+            <div class="input-group">
+                <input type="email" id="email" name="email" required>
+                <label for="email">Email</label>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group">
+                <input type="password" id="password" required>
+                <label for="password">Password</label>
+                <img src="icon/hide.svg" alt="showpw" class="eye-icon" onclick="togglePassword(this)">
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <!-- Button Login -->
+            <button type="submit">Login</button>
+
+            <!-- Go Sign up -->
+            <div class="footer">
+                Don't have account? <a href="./index.html">Sign up here</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="popup-overlay" id="popup">
+        <div class="popup-box">
+            <h3>Ups!</h3>
+            <p id="popupMessage"></p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(img){
+            const input = document.getElementById("password");
+
+            if(input.type === "password"){
+                input.type = "text";
+                img.src = "icon/show.svg";
+            } else {
+                input.type = "password";
+                img.src = "icon/hide.svg";
+            }
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", e => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if(email === "" || password === ""){
+                showPopup("Email dan Password wajib diisi!");
+                return;
+            }
+
+            if(password.length < 8){
+                showPopup("Password minimal 8 karakter!");
+                return;
+            }
+
+            window.location.href = "registration.html";
+        });
+
+        function showPopup(message){
+            document.getElementById("popupMessage").innerText = message;
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function closePopup(){
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+</body>
+</html>

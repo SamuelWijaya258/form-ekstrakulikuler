@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>website sekolah - registration</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="card">
+        <h1>REGISTRATION</h1>
+        <p>CHIS Cyber School</p>
+
+        <form id="registrationForm">
+            <!-- Name -->
+            <div class="input-group">
+                <input type="text" id="fullName" name="fullName" required>
+                <label for="fullName">Full Name</label>
+            </div>
+
+            <div class="input-group">
+                <input type="number" id="phone" required>
+                <label for="phone">No HP</label>
+            </div>
+
+            <div class="input-group">
+                <input type="number" id="nis" required>
+                <label>Student ID (NIS)</label>
+            </div>
+
+            <div class="input-group">
+                <!-- <label>Grade</label> -->
+                <select id="grade" required>
+                    <button>
+                        <selectedcontent></selectedcontent>
+                        <span class="picker"><i class="ri-arrow-left-s-line"></i></span>
+                    </button>
+                    <option value="7">
+                        <span>Kelas 7</span>
+                    </option>
+                    <option value="8">
+                        <span>Kelas 8</span>
+                    </option>
+                    <option value="9">
+                        <span>Kelas 9</span>
+                    </option>
+                    <option value="10">
+                        <span>Kelas 10</span>
+                    </option>
+                    <option value="11">
+                        <span>Kelas 11</span>
+                    </option>
+                    <option value="12">
+                        <span>Kelas 12</span>
+                    </option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <h2>Interest</h2>
+                <div class="interest">
+                    <label>
+                        <input type="checkbox" class="interest-checkbox" name="interest" value="coding">
+                        Coding
+                    </label>
+                    <label>
+                        <input type="checkbox" class="interest-checkbox" name="interest" value="design">
+                        Design
+                    </label>
+                    <label>
+                        <input type="checkbox" class="interest-checkbox" name="interest" value="cyber">
+                        Cyber Security
+                    </label>
+                    <label>
+                        <input type="checkbox" class="interest-checkbox" name="interest" value="multimedia">
+                        Basket
+                    </label>
+                    <label>
+                        <input type="checkbox" class="interest-checkbox" name="interest" value="multimedia">
+                        Bahasa Korea
+                    </label>
+                </div>
+            </div>
+
+            <button>Submit</button>
+            
+            <div class="footer">
+                Go to <a href="./index.html">Sign Up</a> or <a href="./sign-in.html">Sign In</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="popup-overlay" id="popup">
+        <div class="popup-box">
+            <h3>Ups!</h3>
+            <p id="popupMessage"></p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popupResult">
+        <div class="popup-box">
+            <h3>Registrasi Berhasil!</h3>
+            <p class="message">Terima kasih telah mendaftar. Kami akan menghubungi Anda segera.</p>
+            <p class="name"></p>
+            <p class="nis"></p>
+            <p class="phone-number"></p>
+            <p class="kelas"></p>
+            <p class="interested"></p>
+            <button onclick="closePopupResult()">OK</button>
+            <div class="footer">
+                Go to <a href="./index.html">Sign Up</a> or <a href="./sign-in.html">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const limit = 2;
+        const checkboxes = document.querySelectorAll('.interest-checkbox');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkedCount = document.querySelectorAll('.interest-checkbox:checked').length;
+
+                if (checkedCount > limit) {
+                    this.checked = false;
+                    showPopup("Kamu hanya boleh memilih maksimal " + limit + " hobi.");
+                }
+            });
+        });
+
+        const regisForm = document.getElementById("registrationForm");
+        
+        regisForm.addEventListener("submit", e => {
+            e.preventDefault();
+            
+            const name = document.getElementById("fullName").value;
+            const nis = document.getElementById("nis").value;
+            const phone = document.getElementById("phone").value;
+            const grade = document.getElementById("grade").value;
+            const interests = Array.from(document.querySelectorAll('.interest-checkbox:checked')).map(cb => cb.value);
+            
+            showResult(name, nis, phone, grade, interests);
+        });
+
+        function showResult(name, nis, phone, grade, interests){
+            document.querySelector(".popup-box .name").innerText = "Nama: " + name;
+            document.querySelector(".popup-box .nis").innerText = "NIS: " + nis;
+            document.querySelector(".popup-box .phone-number").innerText = "No HP: " + phone;
+            document.querySelector(".popup-box .kelas").innerText = "Kelas: " + grade;
+            document.querySelector(".popup-box .interested").innerText = "Hobi: " + (interests.length > 0 ? interests.join(" dan ") : "Tidak ada");
+            document.getElementById("popupResult").style.display = "flex";
+        }
+
+        function showPopup(message){
+            document.getElementById("popupMessage").innerText = message;
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function closePopup(){
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function closePopupResult(){
+            document.getElementById("popupResult").style.display = "none";
+            document.getElementById("registrationForm").reset();
+        }
+    </script>
+</body>
+</html>
