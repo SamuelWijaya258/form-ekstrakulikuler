@@ -134,10 +134,20 @@
         
         regisForm.addEventListener("submit", e => {
             e.preventDefault();
+
+            if(document.getElementById("phone").value <= 10){
+                showPopup("No HP minimal berisikan 10 digits");
+                return;
+            }
+
+            if(document.getElementById("nis").value <= 10){
+                showPopup("NIS minimal berisikan 10 digits");
+                return;
+            }
             
             const name = document.getElementById("fullName").value;
-            const nis = document.getElementById("nis").value;
             const phone = document.getElementById("phone").value;
+            const nis = document.getElementById("nis").value;
             const grade = document.getElementById("grade").value;
             const interests = Array.from(document.querySelectorAll('.interest-checkbox:checked')).map(cb => cb.value);
             
@@ -146,10 +156,10 @@
 
         function showResult(name, nis, phone, grade, interests){
             document.querySelector(".popup-box .name").innerText = "Nama: " + name;
-            document.querySelector(".popup-box .nis").innerText = "NIS: " + nis;
             document.querySelector(".popup-box .phone-number").innerText = "No HP: " + phone;
+            document.querySelector(".popup-box .nis").innerText = "NIS: " + nis;
             document.querySelector(".popup-box .kelas").innerText = "Kelas: " + grade;
-            document.querySelector(".popup-box .interested").innerText = "Hobi: " + (interests.length > 0 ? interests.join(" dan ") : "Tidak ada");
+            document.querySelector(".popup-box .interested").innerText = "Ekstrakulikuler: " + (interests.length > 0 ? interests.join(" dan ") : "Tidak ada");
             document.getElementById("popupResult").style.display = "flex";
         }
 
