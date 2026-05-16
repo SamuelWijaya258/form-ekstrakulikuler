@@ -144,6 +144,11 @@
                 showPopup("NIS minimal berisikan 10 digits");
                 return;
             }
+
+            if(Array.from(document.querySelectorAll('.interest-checkbox:checked')).map(cb => cb.value).length === 0){
+                showPopup("Harus setidaknya memilih salah 1 dari 5 pilihan Interest");
+                return;
+            }
             
             const name = document.getElementById("fullName").value;
             const phone = document.getElementById("phone").value;
@@ -152,6 +157,7 @@
             const interests = Array.from(document.querySelectorAll('.interest-checkbox:checked')).map(cb => cb.value);
             
             showResult(name, nis, phone, grade, interests);
+            console.log(interests);
         });
 
         function showResult(name, nis, phone, grade, interests){
